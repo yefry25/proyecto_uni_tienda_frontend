@@ -16,7 +16,7 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/createUser`, userData);
   }
 
-  login(credentials: { userName: string, password: string }): Observable<any> {
+  login(credentials: { nickName: string, password: string }): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     
     // Hacemos la petición POST al servidor con las credenciales en el body

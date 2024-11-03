@@ -28,3 +28,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 # proyecto_uni_tienda_frontend
 
 Necesita Node.js 20 o superior
+
+para correrlo entra a Store y ejecuta npm run serve

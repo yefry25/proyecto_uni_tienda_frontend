@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class LogInComponent {
   credentials = {
-    userName: '',
+    nickName: '',
     password: ''
   };
 

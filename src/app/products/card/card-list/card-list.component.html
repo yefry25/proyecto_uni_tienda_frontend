@@ -1,13 +1,28 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-4" *ngFor="let registro of registros">
+        <div class="col-md-4" *ngFor="let product of products">
             <div class="card mb-4">
-                <img [src]="registro.imagen" class="card-img-top" width="450" height="500"
-                    alt="{{ registro.descripcion }}">
+                <img [src]="product.images" class="card-img-top" width="450" height="500"
+                    alt="{{ product.description }}">
                 <div class="card-body">
-                    <h5 class="card-title">{{ registro.marca }}</h5>
-                    <p class="card-text">{{ registro.descripcion }}</p>
-                    <button (click)="addToCart(registro.id)" class="btn btn-success">Agregar al carrito</button>
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <h6 class="card-subtitle">{{ product.price | currency }}</h6>
+                    <h6 class="card-subtitle">Stock disponible: {{ product.stock }}</h6>
+                    <p class="card-text">{{ product.description }}</p>
+                    
+                    <!-- Campo para ingresar la cantidad -->
+                    <div class="form-group">
+                        <label for="quantity">Cantidad</label>
+                        <input type="number" class="form-control" id="quantity" min="1" [max]="product.stock"
+                               [(ngModel)]="product.amount" placeholder="1">
+                    </div>
+
+                    <!-- Botón para agregar al carrito -->
+                    <button (click)="addToCart(product.id, product.amount)" 
+                            class="btn btn-success mt-2" 
+                            [disabled]="!product.amount || product.amount < 1 || product.amount > product.stock">
+                        Agregar al carrito
+                    </button>
                 </div>
             </div>
         </div>

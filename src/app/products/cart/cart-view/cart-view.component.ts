@@ -19,10 +19,7 @@ export class CartViewComponent {
   }
 
   totalValue(): number {
-    console.log(this.cartItems);
-
-
-    return this.cartItems.reduce((total, item) => total + Number(item.Valor), 0);
+    return this.cartItems[0].Total;
   }
 
   loadCart() {
@@ -41,11 +38,12 @@ export class CartViewComponent {
 }
 
 export interface Product {
-  IdOrden: number;
+  OrderId: number;
   IdUsuario: number;
   IdPrenda: number;
-  Marca: string;
-  Valor: number;
+  ProductName: string;
+  SubTotal: number;
+  Total: number;
   Imagen: string;
   FechaCreacion: Date;
 }

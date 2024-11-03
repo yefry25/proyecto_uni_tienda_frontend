@@ -2,31 +2,30 @@ import { Component } from '@angular/core';
 import Swal from "sweetalert2"
 import { CardService } from '../../../core/services/card.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-card-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './card-list.component.html',
   styleUrl: './card-list.component.scss'
 })
 export class CardListComponent {
-  registros: any[] = []
+  products: any[] = []
 
   constructor(private webService: CardService) { }
 
   ngOnInit(): void {
-    this.webService.getRecords().subscribe(data => {
-      this.registros = data;
-
-      console.log(this.registros)
+    this.webService.GetProducts().subscribe(data => {
+      this.products = data;
     })
   }
 
-  addToCart(productId: number) {
-    let userId = parseInt(localStorage.getItem('userId') || '0', 10);
+  addToCart(ProductId: number, Amount: number) {
+    let UserId = parseInt(localStorage.getItem('userId') || '0', 10);
 
-    this.webService.addToCart({ idUsuario: userId, idPrenda: productId }).subscribe({
+    this.webService.AddToCart({ UserId, ProductId, Amount}).subscribe({
       next: () => {
 
         Swal.fire({

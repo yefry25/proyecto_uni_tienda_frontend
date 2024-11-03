@@ -13,11 +13,11 @@ export class CardService {
   constructor(private http: HttpClient) { }
 
   // Método para obtener los registros del web service
-  getRecords(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/clothes`);
+  GetProducts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/products`);
   }
 
-  addToCart(data: { idUsuario: number, idPrenda: number }): Observable<any> {
+  AddToCart(data: { UserId: number, ProductId: number, Amount: number }): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http.post(`${this.apiUrl}/createOrder`, data, { headers }); // Envía el ID del producto
