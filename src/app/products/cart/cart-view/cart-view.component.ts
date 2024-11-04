@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CartService } from '../../../core/services/cart.service';
 import { CurrencyPipe, CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart-view',
@@ -11,8 +12,10 @@ import { CurrencyPipe, CommonModule } from '@angular/common';
 })
 export class CartViewComponent {
   cartItems: Product[] = [];
+  userId = parseInt(localStorage.getItem('userId') || '0', 10);
+  orderId: number = 0;
 
-  constructor(private webService: CartService) { }
+  constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
     this.loadCart();
@@ -23,11 +26,29 @@ export class CartViewComponent {
   }
 
   loadCart() {
-    let userId = parseInt(localStorage.getItem('userId') || '0', 10);
-
-    this.webService.getOrdersByUserId(userId).subscribe(items => {
+    this.cartService.getOrdersByUserId(this.userId).subscribe(items => {
       this.cartItems = items; // Asigna los items al componente
     });
+  }
+
+  finalizePurchase(){
+    console.log("entra a finalizar o no?")
+    this.cartService.createBill({OrderId: this.cartItems[0].OrderId, UserId: this.userId}).subscribe({
+      next: () => {
+
+        Swal.fire({
+          title: 'Compra finalizada',
+          text: `La factura ha sido creada correctamente.`,
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+
+        this.loadCart();
+      },
+      error: (err) => {
+        console.error('Error al finalizar el pedido', err);
+      }
+    })
   }
 
   removeFromCart(productId: number) {
@@ -39,11 +60,11 @@ export class CartViewComponent {
 
 export interface Product {
   OrderId: number;
-  IdUsuario: number;
-  IdPrenda: number;
+  ProductId: number;
   ProductName: string;
+  ProductDescription : string;
+  ProductAmount: number;  
+  Imagen: string;
   SubTotal: number;
   Total: number;
-  Imagen: string;
-  FechaCreacion: Date;
 }

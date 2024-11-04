@@ -17,8 +17,8 @@
     </div>
     <div class="row">
         <div class="col">
-            <p>Total del valor: {{ totalValue() | currency:'COP':true }}</p>
-            <button class="btn btn-success">Finalizar compra</button>
+            <p>Total del valor: {{ totalValue() | currency }}</p>
+            <button class="btn btn-success" (click)="finalizePurchase()" >Finalizar compra</button>
         </div>
     </div>
 </div>
