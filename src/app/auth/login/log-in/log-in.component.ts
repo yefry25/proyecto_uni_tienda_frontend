@@ -18,7 +18,7 @@ export class LogInComponent {
 
   constructor(private authService: AuthService) {}
 
-  onSubmit() {
+  OnSubmit() {
     this.authService.login(this.credentials).subscribe({
       next: (user) => {
         localStorage.setItem('userId', JSON.stringify(user.id));

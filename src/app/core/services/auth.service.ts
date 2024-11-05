@@ -9,18 +9,17 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   private apiUrl = 'http://127.0.0.1:5000'; // Cambia esto por tu URL
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  register(userData: any) {
-    return this.http.post(`${this.apiUrl}/createUser`, userData);
+  register(user: any) {
+    return this.http.post(`${this.apiUrl}/createUser`, user, { headers:this.headers });
   }
 
   login(credentials: { nickName: string, password: string }): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    
     // Hacemos la petición POST al servidor con las credenciales en el body
-    return this.http.post(`${this.apiUrl}/login`, credentials, { headers });
+    return this.http.post(`${this.apiUrl}/login`, credentials, { headers: this.headers });
   }
 
   redirectToHome() {

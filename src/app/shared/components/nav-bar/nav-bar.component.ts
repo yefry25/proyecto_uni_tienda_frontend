@@ -11,14 +11,18 @@ import { Router } from '@angular/router';
 export class NavBarComponent {
   constructor(private router: Router) { }
 
-  openRegister() {
-    this.router.navigate(['/register']);
+  openSign() {
+    this.router.navigate(['/sign']);
   }
 
   openLogin() {
     console.log("desde el login");
 
     this.router.navigate(['/login']);
+  }
+
+  reports(){
+    this.router.navigate(['/report'])
   }
 
   goToCart() {
