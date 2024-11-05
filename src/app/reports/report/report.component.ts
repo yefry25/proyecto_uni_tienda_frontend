@@ -14,6 +14,10 @@ export class ReportComponent {
 
   constructor(private reportService: ReportService) { }
 
+  ngOnInit() : void {
+    this.SalesByProduct();
+  }
+
   SalesByProduct():void {
     this.reportService.GetReportOfSalesByProduct().subscribe({
       next: (data) => {
