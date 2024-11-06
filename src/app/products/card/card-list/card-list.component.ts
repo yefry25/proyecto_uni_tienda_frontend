@@ -3,6 +3,7 @@ import Swal from "sweetalert2"
 import { CardService } from '../../../core/services/card.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-list',
@@ -14,10 +15,10 @@ import { FormsModule } from '@angular/forms';
 export class CardListComponent {
   products: any[] = []
 
-  constructor(private webService: CardService) { }
+  constructor(private cardService: CardService, private router: Router) { }
 
   ngOnInit(): void {
-    this.webService.GetProducts().subscribe(data => {
+    this.cardService.GetProducts().subscribe(data => {
       this.products = data;
     })
   }
@@ -25,7 +26,7 @@ export class CardListComponent {
   addToCart(ProductId: number, Amount: number) {
     let UserId = parseInt(localStorage.getItem('userId') || '0', 10);
 
-    this.webService.AddToCart({ UserId, ProductId, Amount}).subscribe({
+    this.cardService.AddToCart({ UserId, ProductId, Amount }).subscribe({
       next: () => {
 
         Swal.fire({
@@ -39,5 +40,32 @@ export class CardListComponent {
         console.error('Error al agregar al carrito', err);
       }
     });
+  }
+
+  deleteProduct(ProductId: number) {
+    this.cardService.deleteProduct(ProductId).subscribe({
+      next: (data) => {
+        Swal.fire({
+          title: 'Producto eliminado.',
+          text: `${data.message}`,
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+
+        this.ngOnInit();
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error',
+          text: `${err.message}`,
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    })
+  }
+
+  updateProduct(id: number){
+    this.router.navigate(['/add-product', id]);
   }
 }

@@ -12,5 +12,6 @@ export const routes: Routes = [
     { path: 'login', component: LogInComponent },
     { path: 'sign', component: SignInComponent  },
     {path: 'report-page', component: PageComponent},
-    {path: 'add-product', component: AddProductComponent}
+    {path: 'add-product', component: AddProductComponent},
+    {path: 'add-product/:id', component: AddProductComponent}
 ];

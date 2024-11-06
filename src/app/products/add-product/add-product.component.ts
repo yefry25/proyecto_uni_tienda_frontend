@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../../core/services/common.service';
+import { ProductService } from '../../core/services/product.service';
+import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-product',
@@ -14,8 +17,14 @@ export class AddProductComponent {
   productoForm: FormGroup;
   categories: any[] = [];
   brands: any[] = [];
+  isEditMode = false;
+  productId :any;
 
-  constructor(private fb: FormBuilder, private commonService: CommonService) {
+  constructor(private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private commonService: CommonService, 
+              private productService: ProductService) 
+  {
     this.productoForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
       categoryId: ['', Validators.required],
@@ -30,12 +39,62 @@ export class AddProductComponent {
     this.getBrands();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.productId = this.route.snapshot.paramMap.get('id');
+    this.isEditMode = !!this.productId; // Modo edición si `id` existe
+
+    if (this.isEditMode) {
+      this.getProductById(this.productId);
+    }
+  }
+
+  getProductById(productId: any){
+    this.productService.getProductById(productId).subscribe({
+      next: (product: any)=>{
+        this.productoForm.patchValue({
+          name: product.name,
+          categoryId: product.categoryId,
+          brandId: product.brandId,
+          price: product.price,
+          stock: product.stock,
+          description: product.description,
+          active: product.active
+        });
+      },
+      error: ()=>{
+
+      }
+    })
+  }
 
   onSubmit() {
     if (this.productoForm.valid) {
-      console.log(this.productoForm.value);
-      // Aquí envías los datos al backend o realizas cualquier acción adicional
+      
+      if(this.isEditMode){
+        this.productService.updateProduct(this.productId,this.productoForm.value).subscribe({
+          next: (data) =>{
+            Swal.fire({
+              title: 'Producto editado.',
+              text: `${data.message}`,
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+          },
+          error: ()=>{
+
+          }
+        })
+      }
+
+      this.productService.addProduct(this.productoForm.value).subscribe({
+        next: ()=>{
+
+        },
+        error: ()=>{
+
+        }
+      });
+
     } else {
       this.productoForm.markAllAsTouched(); // Marcar todos los campos como "tocados" para mostrar errores
     }

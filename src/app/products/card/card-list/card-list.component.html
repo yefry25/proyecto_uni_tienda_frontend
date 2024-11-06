@@ -9,19 +9,28 @@
                     <h6 class="card-subtitle">{{ product.price | currency }}</h6>
                     <h6 class="card-subtitle">Stock disponible: {{ product.stock }}</h6>
                     <p class="card-text">{{ product.description }}</p>
-                    
+
                     <!-- Campo para ingresar la cantidad -->
                     <div class="form-group">
                         <label for="quantity">Cantidad</label>
                         <input type="number" class="form-control" id="quantity" min="1" [max]="product.stock"
-                               [(ngModel)]="product.amount" placeholder="1">
+                            [(ngModel)]="product.amount" placeholder="1">
                     </div>
 
                     <!-- Botón para agregar al carrito -->
-                    <button (click)="addToCart(product.id, product.amount)" 
-                            class="btn btn-success mt-2" 
-                            [disabled]="!product.amount || product.amount < 1 || product.amount > product.stock">
+                    <button (click)="addToCart(product.id, product.amount)" class="btn btn-success mt-2"
+                        [disabled]="!product.amount || product.amount < 1 || product.amount > product.stock">
                         Agregar al carrito
+                    </button>
+
+                    <!-- Botón para eliminar un producto -->
+                    <button (click)="deleteProduct(product.id)" class="btn btn-danger mt-2">
+                        Eliminar
+                    </button>
+
+                    <!-- Botón para editar un producto -->
+                    <button (click)="updateProduct(product.id)" class="btn btn-primary mt-2">
+                        Editar
                     </button>
                 </div>
             </div>

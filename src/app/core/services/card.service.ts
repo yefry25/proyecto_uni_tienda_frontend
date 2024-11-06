@@ -26,4 +26,8 @@ export class CardService {
   getOrdersByUserId(idUsuario: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/orderDetail/${idUsuario}`)
   }
+
+  deleteProduct(ProductId: number): Observable<any>{
+    return this.http.delete(`${this.apiUrl}/deleteProduct/${ProductId}`)
+  }
 }
