@@ -22,10 +22,14 @@ export class NavBarComponent {
   }
 
   reports(){
-    this.router.navigate(['/report'])
+    this.router.navigate(['/report-page'])
   }
 
   goToCart() {
     this.router.navigate(['/cart']); // Asegúrate de que esta ruta esté definida en tu router
+  }
+
+  addProduct(){
+    this.router.navigate(['/add-product'])
   }
 }

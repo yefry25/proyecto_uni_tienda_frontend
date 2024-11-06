@@ -1,0 +1,20 @@
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Reportes</h1>
+  
+    <!-- Selector de Reportes -->
+    <div class="mb-4 d-flex justify-content-center">
+      <button class="btn btn-secondary me-2" (click)="changeReportType('salesByProduct')">Ventas por Producto</button>
+      <button class="btn btn-secondary me-2" (click)="changeReportType('statusOfUser')">Estado de Usuarios</button>
+      <button class="btn btn-secondary me-2" (click)="changeReportType('salesForUser')">Ventas por Usuarios</button>
+      <button class="btn btn-secondary me-2" (click)="changeReportType('productInventory')">Inventario de Productos</button>
+      <button class="btn btn-secondary me-2" (click)="changeReportType('orderStatus')">Estado de las Ordenes</button>
+      <button class="btn btn-secondary me-2" (click)="changeReportType('issuedBills')">Facturas Emitidas</button>
+      <button class="btn btn-secondary me-2" (click)="changeReportType('montlyIncome')">Ingresos Mensuales</button>
+      <button class="btn btn-secondary me-2" (click)="changeReportType('salesByCategory')">Ventas por Categoría</button>
+      <!-- Agrega más botones para otros reportes -->
+    </div>
+  
+    <!-- Tabla Dinámica de Reporte -->
+    <app-dynamic-report-table [data]="currentData" [columns]="currentColumns"></app-dynamic-report-table>
+  </div>
+  
