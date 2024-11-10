@@ -1,24 +1,49 @@
-<div class="container">
-    <h2>Tu Carrito de Compras</h2>
-    <div *ngIf="cartItems.length === 0">
-        <p>No hay productos en tu carrito.</p>
+<div class="container my-4">
+    <h2 class="mb-4 text-center">Tu Carrito de Compras</h2>
+  
+    <!-- Mensaje si el carrito está vacío -->
+    <div *ngIf="cartItems.length === 0" class="alert alert-warning text-center" role="alert">
+      No hay productos en tu carrito.
     </div>
-    <div class="row">
-        <div class="col-md-4" *ngFor="let item of cartItems">
-            <div class="card mb-4">
-                <img [src]="item.Imagen" class="card-img-top" width="450" height="500" alt="{{ item.ProductName }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.ProductName }}</h5>
-                    <p class="card-text">Precio: {{ item.SubTotal }} USD</p>
-                    <button class="btn btn-danger" (click)="removeFromCart(item.OrderId)">Eliminar</button>
-                </div>
+  
+    <!-- Lista de productos en el carrito -->
+    <div class="row g-4" *ngIf="cartItems.length > 0">
+      <div class="col-md-4" *ngFor="let item of cartItems">
+        <div class="card h-100 shadow-sm border-0 rounded-lg">
+          <img
+            [src]="item.Imagen"
+            class="card-img-top img-fluid rounded-top"
+            alt="{{ item.ProductName }}"
+            style="height: 300px; object-fit: cover;"
+          />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-primary">{{ item.ProductName }}</h5>
+            <p class="card-text text-muted mb-1">{{ item.ProductDescription }}</p>
+            <p class="card-text fw-bold text-dark">Precio Unitario: {{ item.productAmount | currency }}</p>
+            <p class="card-text fw-bold text-success">Subtotal: {{ item.SubTotal | currency }}</p>
+  
+            <div class="mt-auto">
+              <!-- Botón para eliminar producto del carrito -->
+              <button
+                class="btn btn-outline-danger w-100 mt-2"
+                (click)="removeFromCart(item.OrderId)"
+              >
+                <i class="fas fa-trash-alt me-2"></i> Eliminar
+              </button>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <p>Total del valor: {{ totalValue() | currency }}</p>
-            <button class="btn btn-success" (click)="finalizePurchase()" >Finalizar compra</button>
-        </div>
+  
+    <!-- Resumen y botón de finalizar compra -->
+    <div class="row mt-4">
+      <div class="col text-end">
+        <h4 class="fw-bold">Total del valor: {{ totalValue() | currency }}</h4>
+        <button class="btn btn-success btn-lg mt-2" (click)="finalizePurchase()">
+          <i class="fas fa-check-circle me-2"></i> Finalizar compra
+        </button>
+      </div>
     </div>
-</div>
+  </div>
+  

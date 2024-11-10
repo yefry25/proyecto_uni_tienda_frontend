@@ -1,20 +1,35 @@
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Reportes</h1>
-  
-    <!-- Selector de Reportes -->
-    <div class="mb-4 d-flex justify-content-center">
-      <button class="btn btn-secondary me-2" (click)="changeReportType('salesByProduct')">Ventas por Producto</button>
-      <button class="btn btn-secondary me-2" (click)="changeReportType('statusOfUser')">Estado de Usuarios</button>
-      <button class="btn btn-secondary me-2" (click)="changeReportType('salesForUser')">Ventas por Usuarios</button>
-      <button class="btn btn-secondary me-2" (click)="changeReportType('productInventory')">Inventario de Productos</button>
-      <button class="btn btn-secondary me-2" (click)="changeReportType('orderStatus')">Estado de las Ordenes</button>
-      <button class="btn btn-secondary me-2" (click)="changeReportType('issuedBills')">Facturas Emitidas</button>
-      <button class="btn btn-secondary me-2" (click)="changeReportType('montlyIncome')">Ingresos Mensuales</button>
-      <button class="btn btn-secondary me-2" (click)="changeReportType('salesByCategory')">Ventas por Categoría</button>
-      <!-- Agrega más botones para otros reportes -->
-    </div>
-  
-    <!-- Tabla Dinámica de Reporte -->
-    <app-dynamic-report-table [data]="currentData" [columns]="currentColumns"></app-dynamic-report-table>
+  <h1 class="text-center mb-4">Reportes</h1>
+
+  <!-- Selector de Reportes -->
+  <div class="mb-4 d-flex justify-content-center flex-wrap gap-3">
+    <button class="btn btn-primary btn-lg shadow-sm" (click)="changeReportType('salesByProduct')">
+      <i class="fas fa-chart-bar me-2"></i> Ventas por Producto
+    </button>
+    <button class="btn btn-primary btn-lg shadow-sm" (click)="changeReportType('statusOfUser')">
+      <i class="fas fa-users me-2"></i> Estado de Usuarios
+    </button>
+    <button class="btn btn-primary btn-lg shadow-sm" (click)="changeReportType('salesForUser')">
+      <i class="fas fa-user-tie me-2"></i> Ventas por Usuarios
+    </button>
+    <button class="btn btn-primary btn-lg shadow-sm" (click)="changeReportType('productInventory')">
+      <i class="fas fa-box-open me-2"></i> Inventario de Productos
+    </button>
+    <button class="btn btn-primary btn-lg shadow-sm" (click)="changeReportType('orderStatus')">
+      <i class="fas fa-clipboard-list me-2"></i> Estado de las Ordenes
+    </button>
+    <button class="btn btn-primary btn-lg shadow-sm" (click)="changeReportType('issuedBills')">
+      <i class="fas fa-file-invoice me-2"></i> Facturas Emitidas
+    </button>
+    <button class="btn btn-primary btn-lg shadow-sm" (click)="changeReportType('monthlyIncome')">
+      <i class="fas fa-calendar-day me-2"></i> Ingresos Mensuales
+    </button>
+    <button class="btn btn-primary btn-lg shadow-sm" (click)="changeReportType('salesByCategory')">
+      <i class="fas fa-tags me-2"></i> Ventas por Categoría
+    </button>
+    <!-- Agrega más botones para otros reportes -->
   </div>
-  
+
+  <!-- Tabla Dinámica de Reporte -->
+  <app-dynamic-report-table [data]="currentData" [columns]="currentColumns"></app-dynamic-report-table>
+</div>

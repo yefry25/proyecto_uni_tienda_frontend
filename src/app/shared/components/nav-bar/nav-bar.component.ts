@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent {
+  cartItemCount = 0;
+
   constructor(private router: Router) { }
 
   openSign() {
@@ -16,8 +19,6 @@ export class NavBarComponent {
   }
 
   openLogin() {
-    console.log("desde el login");
-
     this.router.navigate(['/login']);
   }
 

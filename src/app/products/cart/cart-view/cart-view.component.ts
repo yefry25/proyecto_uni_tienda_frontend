@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrl: './cart-view.component.scss'
 })
 export class CartViewComponent {
-  cartItems: Product[] = [];
+  cartItems: any[] = [];
   userId = parseInt(localStorage.getItem('userId') || '0', 10);
   orderId: number = 0;
 
