@@ -1,16 +1,43 @@
-<div class="container">
-    <h2>Iniciar Sesión</h2>
-    <form (ngSubmit)="OnSubmit()">
-        <div class="form-group">
-            <label for="nick">Nick</label>
-            <input type="text" id="userName" [(ngModel)]="credentials.nickName" name="userName" class="form-control"
-                required>
-        </div>
-        <div class="form-group">
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" [(ngModel)]="credentials.password" name="password" class="form-control"
-                required>
-        </div>
-        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-    </form>
-</div>
+<div class="container mt-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        Iniciar Sesión
+      </div>
+      <div class="card-body">
+        <form [formGroup]="loginForm" (ngSubmit)="OnSubmit()">
+          <!-- Nick -->
+          <div class="mb-3">
+            <label for="userName" class="form-label">Nick</label>
+            <input
+              type="text"
+              id="userName"
+              formControlName="nickName"
+              class="form-control"
+              placeholder="Ingrese su nick"
+            />
+            <div *ngIf="loginForm.get('nickName')?.invalid && loginForm.get('nickName')?.touched" class="text-danger">
+              El nick es requerido.
+            </div>
+          </div>
+  
+          <!-- Contraseña -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              class="form-control"
+              placeholder="Ingrese su contraseña"
+            />
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+              La contraseña es requerida.
+            </div>
+          </div>
+  
+          <!-- Botón para Enviar -->
+          <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+        </form>
+      </div>
+    </div>
+  </div>

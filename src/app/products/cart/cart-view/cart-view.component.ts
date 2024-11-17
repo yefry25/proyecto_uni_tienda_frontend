@@ -27,6 +27,8 @@ export class CartViewComponent {
 
   loadCart() {
     this.cartService.getOrdersByUserId(this.userId).subscribe(items => {
+      console.log(items);
+      
       this.cartItems = items; // Asigna los items al componente
     });
   }

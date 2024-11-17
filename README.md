@@ -27,6 +27,16 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 # proyecto_uni_tienda_frontend
 
-Necesita Node.js 20 o superior
+#Requisitos
 
-para correrlo entra a Store y ejecuta npm run serve
+- Node.js 20 o superior
+- Angular cli 18 
+
+# Instalación
+
+1. Navega a la carpeta raiz y ejecuta 
+npm i
+
+2. luego para correrlo entra a Store y ejecuta 
+
+npm run serve
