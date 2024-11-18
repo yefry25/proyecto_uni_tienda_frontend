@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../../core/services/common.service';
 import { ProductService } from '../../core/services/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,19 +18,20 @@ export class AddProductComponent {
   categories: any[] = [];
   brands: any[] = [];
   isEditMode = false;
-  productId :any;
+  productId: any;
 
   constructor(private fb: FormBuilder,
-              private route: ActivatedRoute,
-              private commonService: CommonService, 
-              private productService: ProductService) 
-  {
+    private router: Router,
+    private route: ActivatedRoute,
+    private commonService: CommonService,
+    private productService: ProductService) {
     this.productoForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
       categoryId: ['', Validators.required],
       brandId: ['', Validators.required],
       price: [null, [Validators.required, Validators.min(0)]],
       stock: [null, [Validators.required, Validators.min(0)]],
+      image: [''],
       description: ['', Validators.required],
       active: [true] // Valor predeterminado como activo
     });
@@ -48,9 +49,9 @@ export class AddProductComponent {
     }
   }
 
-  getProductById(productId: any){
+  getProductById(productId: any) {
     this.productService.getProductById(productId).subscribe({
-      next: (product: any)=>{
+      next: (product: any) => {
         this.productoForm.patchValue({
           name: product.name,
           categoryId: product.categoryId,
@@ -61,7 +62,7 @@ export class AddProductComponent {
           active: product.active
         });
       },
-      error: ()=>{
+      error: () => {
 
       }
     })
@@ -69,32 +70,43 @@ export class AddProductComponent {
 
   onSubmit() {
     if (this.productoForm.valid) {
-      
-      if(this.isEditMode){
-        this.productService.updateProduct(this.productId,this.productoForm.value).subscribe({
-          next: (data) =>{
+
+      if (this.isEditMode) {
+        this.productService.updateProduct(this.productId, this.productoForm.value).subscribe({
+          next: (data) => {
             Swal.fire({
               title: 'Producto editado.',
               text: `${data.message}`,
               icon: 'success',
               confirmButtonText: 'Aceptar'
             });
+
+            this.router.navigate(['/'])
           },
-          error: ()=>{
+          error: () => {
 
           }
         })
       }
+      else if (this.isEditMode == false) {
 
-      this.productService.addProduct(this.productoForm.value).subscribe({
-        next: ()=>{
+        this.productService.addProduct(this.productoForm.value).subscribe({
+          next: (data) => {
+            Swal.fire({
+              title: 'Producto agregado.',
+              text: `${data.message}`,
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+            console.log(data);
 
-        },
-        error: ()=>{
+            this.router.navigate(['/'])
+          },
+          error: () => {
 
-        }
-      });
-
+          }
+        });
+      }
     } else {
       this.productoForm.markAllAsTouched(); // Marcar todos los campos como "tocados" para mostrar errores
     }
@@ -120,5 +132,5 @@ export class AddProductComponent {
 
       }
     })
-  } 
+  }
 }
